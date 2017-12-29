@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Personas</title>
+    <link rel="stylesheet" href="views/css/bootstrap.min.css">
+   	<link rel="stylesheet" href="views/css/dataTables.bootstrap.min.css">
+   	<link rel="stylesheet" href="views/css/buttons.bootstrap.min.css">
+    <link rel="stylesheet" href="views/css/estilos.css">
+
+    <script src="views/js/jquery-1.12.3.js"></script>
+   	<script src="views/js/bootstrap.min.js"></script>
+   	<script src="views/js/jquery.dataTables.min.js"></script>
+   	<script src="views/js/dataTables.bootstrap.js"></script>
+   	<script src="views/js/dataTables.buttons.min.js"></script>
+   	<script src="views/js/buttons.bootstrap.min.js"></script>
+   	<script src="views/js/vfs_fonts.js"></script>
+   	<script src="views/js/buttons.html5.min.js"></script>
+    <script src="views/js/funciones.js"></script>
+  </head>
+  <body>
+    <div class="row">
+      <fieldset>
+        <legend>Lista de clientes</legend>
+        <div id="cuadro1" class="col-sm-12 col-md-12 col-lg-12">
+          <div class="col-sm-offset-2 col-sm-8">
+            <h3 class="text-center"> <small class="mensaje"></small></h3>
+          </div>
+          <div class="table-responsive col-sm-12">
+            <table id="dt_cliente" class="table table-bordered table-hover" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Primer nombre</th>
+                  <th>Segundo nombre</th>
+                  <th>Primer apellido</th>
+                  <th>Segundo apellido</th>
+                  <th>Documento</th>
+                  <th>Número de documento</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody id="dt_clienteb">
+                <?php
+                  foreach ($datoscl as $dato) {
+                    echo "<tr id='cli".$dato["id"]."'><td>".$dato["id"]."</td><td>".$dato["primern"]."</td><td>".$dato["segundon"]."</td><td>".$dato["primera"]."</td><td>".$dato["segundoa"]."</td><td>".$dato["tdocumento"]."</td><td>".$dato["ndocumento"]."</td><td><input type='submit' value='Ver' onclick='mostrarDetalleCliente(".$dato["id"].")'><input id='mcliente' type='submit' value='Editar' onclick='mostrarModificarCliente(".$dato["id"].")'></td></tr>";
+                  }
+                ?>
+              </tbody>
+            </table>
+            <input type="submit" value="Nuevo cliente" onclick="mostrarNuevoCliente()">
+            <input id="nfcliente" type="submit" value="Nueva factura" onclick="mostrarNuevaFactura2()" disabled="true">
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <script type="text/javascript">
+      var tablec;
+      $(document).on('ready', function(){
+        tablec = $('#dt_cliente').DataTable({
+          "destroy":true,
+          "language": {
+            "decimal": ",",
+            "thousands": ".",
+            "url":"//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+          }
+        });
+        $('#dt_clienteb').on( 'click', 'tr', function () {
+          if( $(this).hasClass('selectedc') ) {
+            $(this).removeClass('selectedc');
+            document.getElementById('nfcliente').disabled=true;            
+          }else {
+            tablec.$('tr.selectedc').removeClass('selectedc');
+            $(this).addClass('selectedc');
+            document.getElementById('nfcliente').disabled=false;
+          }
+        });
+      });
+    </script>   
+    <div id="detallecliente">
+      <fieldset>
+        <legend>Detalles del cliente</legend>
+        <div>
+          <input type="hidden" id="dclid">
+        </div>        
+        <div>
+          <label for="nombreclil"><b>Nombre de cliente: </b></label>
+          <label id="nombrecli"></label>
+        </div>
+        <div>
+          <label for="tdocumetoclil"><b>Tipo de documento: </b></label>
+          <label id="tdocumetocli"></label>
+        </div>
+        <div>
+          <label for="ndocumetoclil"><b>Número de documento: </b></label>
+          <label id="ndocumetocli"></label>
+        </div>                
+      </fieldset>
+      <fieldset>
+        <legend>Formas de contactos</legend>
+        <table id="tablacontactoc" class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Tipo contacto</th>
+              <th>Contacto</th>
+            </tr>
+          </thead>
+        </table>
+      </fieldset>        
+      <fieldset>
+        <legend>Listado de facturas</legend>
+        <div id="cuadro1" class="col-sm-12 col-md-12 col-lg-12">
+          <div class="col-sm-offset-2 col-sm-8">
+            <h3 class="text-center"> <small class="mensaje"></small></h3>
+          </div>
+          <div class="table-responsive col-sm-12">
+            <table id="dt_clientef" class="table table-bordered table-hover" cellspacing="0">
+              <thead id="cabeceraf">
+                <tr>
+                  <th>Número de factura</th>
+                  <th>Fecha</th>
+                  <th>Valor total</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody id="dt_clientefb">
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <input type="submit" value="Editar" onclick="mostrarModificarCliente(document.getElementById('dclid').value)">
+          <input type="submit" value="Nueva factura" onclick="mostrarNuevaFactura(document.getElementById('dclid').value)">
+          <input type="submit" value="Cerrar" onclick="ocultarDetalleCliente()">
+        </div>        
+      </fieldset> 
+      <br> 
+    </div>
+    <div id="detallefactura">
+      <fieldset>
+        <legend>Detalles de factura</legend>
+        <div>
+          <label><b>Número de factura: </b></label><label id="nfactura"></label>
+        </div> 
+        <div>
+          <label><b>Nombre cliente: </b></label><label id="nombrecf"></label>
+        </div>
+        <div>
+          <label><b>Identificación: </b></label><label id="numerocf"></label> 
+        </div> 
+        <div>               
+          <label for="fecha"><b>Fecha: </b></label><label id="fechaf"></label> 
+        </div>
+        <div>
+          <table class="table table-bordered table-hover" id="tablaproductof">
+            <thead id="cabecerapf">
+              <tr>
+                <th>Referencia</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Valor unitario</th>
+                <th>Valor total</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr id="finalpf">
+                <td>Total a pagar:</td>
+                <td id="totalfacc" colspan="4"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div> 
+        <div>
+          <input type="submit" value="Cerrar" onclick="ocultarDetalleFactura()">
+        </div>
+      </fieldset>
+      <br>
+    </div>
+    <div  id="modificacliente">
+      <fieldset>
+        <legend>Datos del cliente</legend>
+        <div>
+          <input type="hidden" id="clid">
+        </div>  
+        <div>
+          <label for="pnombre">Primer nombre: </label>
+          <input type="text" id="pnombre" size="30" />
+        </div>
+        <div>
+          <label for="snombre">Segundo nombre: </label>
+          <input type="text" id="snombre" size="30" />
+        </div>
+        <div>
+          <label for="papellido">Primer apellido: </label>
+          <input type="text" id="papellido" size="30" />
+        </div>
+        <div>
+          <label for="sapellido">Segundo apellido: </label>
+          <input type="text" id="sapellido" size="30" />
+        </div>
+        <div>
+          <label for="tdocumento">Tipo de documento: </label>
+          <select id="documento">
+            <?php
+              foreach ($datosd as $dato) {
+                echo "<option >".$dato["descripcion_documento"]."</option>";
+              }
+            ?>
+          </select>
+          </div>
+        <div>
+          <label for="ndocumento">Número de documento: </label>
+          <input type="text" id="ndocumento" size="30" />
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Contactos del cliente</legend>
+        <div>
+          <label for="tcontacto">Tipo de contacto: </label>
+          <select id="contacto">
+            <?php
+              foreach ($datosc as $dato) {
+                echo "<option>".$dato["descripcion_contacto"]."</option>";
+              }
+            ?>
+          </select>
+        </div>
+        <div>
+          <label for="vcontacto">Dato: </label>
+          <input type="text" id="vcontacto" size="30" />
+        </div>
+        <div>
+          <input type="submit" value="Agregar contacto" onclick='agregar()'>
+        </div>
+        <br>
+        <div>
+          <table class="table table-bordered table-hover" id="tablacontacto">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Valor</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div>
+          <input type="submit" value="Guardar" onclick="elegirOpcionCliente()">
+          <input type="submit" value="Cancelar" onclick="ocultarModificarCliente()">
+        </div>
+      </fieldset>
+      <br>
+    </div>
+    <div id="nuevafactura">
+      <fieldset>
+        <legend>Factura</legend>
+        <div>
+          <input type="hidden" id="idc">
+          <label><b>Nombre cliente: </b></label><label id="nombrec"></label>
+        </div>
+        <div>
+          <label><b>Identificación: </b></label><label id="numeroc"></label>
+        </div>   
+        <div>               
+          <label for="fecha">Fecha: </label>
+          <?php
+            $fecha=date("Y-m-d");
+            echo '<input type="text" id="fechafac" value="'.$fecha.'" disabled/>';
+          ?>
+        </div>
+        <div>
+          <table class="table table-bordered table-hover" id="tablaproducto">
+            <thead id="cabecerapro">
+              <tr>
+                <th>Referencia</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Valor unitario</th>
+                <th>Valor total</th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr id="finalpro">
+                <td>Total a pagar:</td>
+                <td id="totalfac" colspan="4"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div>
+          <input type="submit" value="Guardar" onclick="crearFactura()">
+          <input type="submit" value="Cancelar" onclick="ocultarNuevaFactura()">
+          <input type="submit" value="Agregar producto" onclick="mostrarAgregarProducto()">
+        </div>
+      </fieldset>
+      <br>
+    </div>
+    <div id="nuevoproducto">
+      <fieldset>
+        <legend>Datos del producto</legend>
+        <div>
+          <input type="hidden" id="pid">
+        </div>
+        <div>
+          <label for="pnombre">Nombre del producto: </label>
+          <input type="text" id="prnombre" />
+        </div>
+        <div>
+          <label for="snombre">Valor unitario: </label>
+          <input type="number" id="pvunitario" value="0" min="50"/>
+        </div>
+        <br>
+        <div>
+          <input type="submit" id="btnguargar" value="Guardar" onclick="elegirOpcionProducto()"/>
+          <input type="submit" id="btncerrarnp" value="Cerrar" onclick="ocultarNuevoProducto()" />
+        </div>
+        <br>
+      </fieldset>
+    </div>
+    <hr>        
+    <div class="row">
+      <fieldset>
+        <legend>Lista de productos</legend>
+        <div id="cuadro1" class="col-sm-12 col-md-12 col-lg-12">
+          <div class="col-sm-offset-2 col-sm-8">
+            <h3 class="text-center"> <small class="mensaje"></small></h3>
+          </div>
+          <div class="table-responsive col-sm-12">
+            <table id="dt_productol" class="table table-bordered table-hover" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Nombre</th>
+                  <th>Valor unitario</th>
+                  <th>Estado</th>
+         					<th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody id="dt_productolb">
+                <?php
+                  foreach ($datosp as $dato) {
+                    if($dato["estado"]==1){
+                      echo "<tr id='pro".$dato["id_producto"]."'><td>".$dato["id_producto"]."</td><td>".$dato["nombre_producto"]."</td><td>".$dato["valor_unitario"]."</td><td>Activo</td><td><input type='submit' value='Editar' onclick='mostrarModificarProducto(".$dato["id_producto"].")'><input type='submit' value='Descontinuar' onclick='descontinuarProducto(".$dato["id_producto"].")'></td></tr>";
+                    }else{
+                      echo "<tr id='pro".$dato["id_producto"]."'><td>".$dato["id_producto"]."</td><td>".$dato["nombre_producto"]."</td><td>".$dato["valor_unitario"]."</td><td>Descontinuado</td><td><input type='submit' value='Editar' onclick='mostrarModificarProducto(".$dato["id_producto"].")'><input type='submit' value='Activar' onclick='activarProducto(".$dato["id_producto"].")'></td></tr>";
+                    }
+                  }
+                ?>
+              </tbody>
+            </table>
+            <input type="submit" value="Nuevo producto" onclick="mostrarNuevoProducto()">
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <script type="text/javascript">
+      $(document).on('ready', function(){
+        listarProductos();
+      });
+    </script>
+    <div class="row" id="agregaproducto">
+      <fieldset>
+        <legend>Agregue el producto</legend>
+        <div id="cuadro1" class="col-sm-12 col-md-12 col-lg-12">
+          <div class="col-sm-offset-2 col-sm-8">
+            <h3 class="text-center"> <small class="mensaje"></small></h3>
+          </div>
+          <div class="table-responsive col-sm-12">
+            <table id="dt_producto" class="table table-bordered table-hover" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Nombre</th>
+                  <th>Valor unitario</th>
+                </tr>
+              </thead>
+              <tbody id="dt_productob">
+                <?php
+                  foreach ($datospac as $datoact) {
+                    echo "<tr><td>".$datoact["id_producto"]."</td><td>".$datoact["nombre_producto"]."</td><td>".$datoact["valor_unitario"]."</td></tr>";
+                  }
+                ?>
+              </tbody>
+            </table>
+            <input type="submit" value="Agregar" onclick="agregarProductoFactura()">
+            <input type="submit" value="Cerrar" onclick="ocultarAgregarProducto()">
+          </div>
+        </div>
+      </fieldset>
+      <br>
+    </div>
+    <script type="text/javascript">
+      var table;
+      $(document).on('ready', function(){
+        table = $('#dt_producto').DataTable({
+          "destroy":true,
+          "language": {
+            "decimal": ",",
+            "thousands": ".",
+            "url":"//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+          }
+        });
+        $('#dt_productob').on( 'click', 'tr', function () {
+          if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+          }else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+          }
+        });
+      });
+    </script>        
+  </body>
+</html>
