@@ -1,4 +1,8 @@
 <?php
+	/**
+	*Controlador de clientes
+	*Carga del listado de clientes
+	**/
 	include("../models/clientes_model.php");
 	include("../db/db.php");
 	$cli=new clientes_model();
