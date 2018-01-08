@@ -1,5 +1,10 @@
+      /*
+      * Funciones.js
+      * Funciones de interacción de la vista y carga de tablas dinámicas
+      */
       var i=0;
       function agregar(){
+        /*Agrega contactos a nuevo cliente antes de guardarlo*/
         var contacto = new Array();
         var listatipo = document.getElementById("contacto");
         var pro = listatipo.options[listatipo.selectedIndex].value;
@@ -10,10 +15,12 @@
         i++;
       }
       function eliminarContactoCliente(contacto){
+        /*Elimina contactos a nuevo cliente antes de guardarlo*/            
         var i = contacto.parentNode.parentNode.rowIndex;
         document.getElementById("tablacontacto").deleteRow(i);        
       }      
       function agregarProductoFactura(){
+        /*Agrega productos a nueva factura antes de guardarla*/
         var opcionselect = document.getElementsByClassName("selected")[0].querySelectorAll("td");
         var tabla = document.getElementById("tablaproducto");
         if(document.getElementById("c"+opcionselect[0].innerHTML)){
@@ -24,10 +31,12 @@
         }
       }
       function eliminarProductoFactura(producto){
+        /*Elimina productos a nueva factura antes de guardarla*/
         var i = producto.parentNode.parentNode.rowIndex;
         document.getElementById("tablaproducto").deleteRow(i);
       }      
       function cambiarTotalF(){
+        /*Actualiza valor total de factura*/
         var valores = document.getElementById("tablaproducto").querySelectorAll(".vt");
         var total = 0;
         for (i = 0; i < valores.length; i++) {
@@ -37,6 +46,7 @@
         valort.innerHTML=total;
       }
       function cambiarTotalP(id){
+        /*Cambia valor de producto en la factura respecto a las unidades indicadas*/
         var cantidad = document.getElementById("c"+id);
         var valoru = document.getElementById("vu"+id);
         var valor = document.getElementById("v"+id);
@@ -44,12 +54,14 @@
         cambiarTotalF();
       }
       function mostrarNuevoProducto(){
+        /*Configura y muestra ventana de creación de productos*/
         var ventana = document.getElementById('nuevoproducto');
         ventana.style.marginTop = "100px";
         ventana.style.left = ((document.body.clientWidth-(document.body.clientWidth*0.4)) / 2) +  "px";
         ventana.style.display = 'block';
       } 
       function mostrarModificarProducto(id){
+        /*Configura y muestra ventana de modificación de productos*/
         var ventana = document.getElementById('nuevoproducto');
         ventana.style.marginTop = "100px";
         ventana.style.left = ((document.body.clientWidth-(document.body.clientWidth*0.4)) / 2) +  "px";
@@ -60,6 +72,7 @@
         document.getElementById('pvunitario').value=producto[2].innerHTML;        
       }       
       function ocultarNuevoProducto(){
+        /*Limpia y ocula ventana de creación de productos*/
         var ventana = document.getElementById('nuevoproducto');
         ventana.style.display = 'none';
         document.getElementById('pid').value='';
@@ -67,16 +80,19 @@
         document.getElementById('pvunitario').value=0; 
       }  
       function mostrarAgregarProducto(){
+         /*Muestra ventana de listado de productos para agregarse a la factura*/
          var ventana = document.getElementById('agregaproducto');
          ventana.style.marginTop = "100px";
          ventana.style.left = ((document.body.clientWidth-(document.body.clientWidth*0.6)) / 2) +  "px";
          ventana.style.display = 'block';
       } 
       function ocultarAgregarProducto(){
+        /*Oculta ventana de listado de productos para agregarse a la factura*/
         var ventana = document.getElementById('agregaproducto');
         ventana.style.display = 'none';
       }  
       function mostrarNuevaFactura(cid){
+        /*Muestra ventana con datos de factura*/
         var ventana = document.getElementById('nuevafactura');
         ventana.style.marginTop = "100px";
         ventana.style.left = ((document.body.clientWidth-(document.body.clientWidth*0.6)) / 2) +  "px";
@@ -86,6 +102,7 @@
         document.getElementById('numeroc').innerHTML=document.getElementById('ndocumetocli').innerHTML;
       } 
       function mostrarNuevaFactura2(){
+        /*Muestra ventana de nueva factura con datos de cliente*/
         var ventana = document.getElementById('nuevafactura');
         ventana.style.marginTop = "100px";
         ventana.style.left = ((document.body.clientWidth-(document.body.clientWidth*0.6)) / 2) +  "px";
@@ -96,6 +113,7 @@
         document.getElementById('numeroc').innerHTML=opcionselect[6].innerHTML;
       }       
       function ocultarNuevaFactura(){
+        /*Limpia y oculta ventana de nueva factura*/
         var ventana = document.getElementById('nuevafactura');
         ventana.style.display = 'none';
         document.getElementById('idc').value='';
@@ -105,6 +123,7 @@
         document.getElementById("tablaproducto").querySelectorAll("tbody")[0].innerHTML='';
       } 
       function mostrarModificarCliente(id){
+        /*Muestra y configuración de ventana con los datos del cliente*/
         var ventana = document.getElementById('modificacliente');
         ventana.style.marginTop = "40px";
         ventana.style.left = ((document.body.clientWidth-(document.body.clientWidth*0.6)) / 2) +  "px";
@@ -122,6 +141,7 @@
           }           
         }
         document.getElementById('ndocumento').value=cliente[6].innerHTML;
+        //Carga de lista de contactos
         $(document).ready(function() {
           $.get('controllers/contactos_controller.php?cliid='+id, function(data) { 
             $.each(data, function(idx, opt) {
@@ -133,12 +153,14 @@
         });
       }
       function mostrarNuevoCliente(){
+         /*Muestra ventana de nuevo cliente*/
          var ventana = document.getElementById('modificacliente');
          ventana.style.marginTop = "40px";
          ventana.style.left = ((document.body.clientWidth-(document.body.clientWidth*0.6)) / 2) +  "px";
          ventana.style.display = 'block';
       } 
       function ocultarModificarCliente(){
+        /*Limpia y oculta ventana de modificación de clientes*/
         var ventana = document.getElementById('modificacliente');
         ventana.style.display = 'none';
         document.getElementById('clid').value='';
@@ -151,6 +173,7 @@
         document.getElementById('tablacontacto').innerHTML='<thead><tr><th>Tipo</th><th>Valor</th></tr></thead>';
       }
       function mostrarDetalleCliente(cli_id){
+        /*Muestra ventana con datos de cliente*/
         var ventana = document.getElementById('detallecliente');
         ventana.style.marginTop = "40px";
         ventana.style.left = ((document.body.clientWidth-(document.body.clientWidth*0.6)) / 2) +  "px";
@@ -161,7 +184,8 @@
         document.getElementById('nombrecli').innerHTML=cliented[1].innerHTML+" "+cliented[2].innerHTML+" "+cliented[3].innerHTML+" "+cliented[4].innerHTML;
         document.getElementById('tdocumetocli').innerHTML=cliented[5].innerHTML;
         document.getElementById('ndocumetocli').innerHTML=cliented[6].innerHTML;
-
+        
+        //Carga de contactos
         var table = $('#tablacontactoc').DataTable({
           "destroy":true,
           "language": {
@@ -179,6 +203,7 @@
           ]
         });
 
+        //Carga de facturas
         var tablef = $('#dt_clientef').DataTable({
           "destroy":true,
           "language": {
@@ -209,12 +234,14 @@
         });      
       } 
       function ocultarDetalleCliente(){
+        /*Limpia y oculta ventana con datos de clientes*/
         var ventana = document.getElementById('detallecliente');
         ventana.style.display = 'none';
         document.getElementById("dt_clientefb").innerHTML='';
         document.getElementById("tablacontactoc").innerHTML='<thead><tr><th>Tipo contacto</th><th>Contacto</th></tr></thead>';
       } 
       function mostrarDetalleFactura(){
+        /*Muestra ventana con datos de factura*/
         var ventana = document.getElementById('detallefactura');
         ventana.style.marginTop = "40px";
         ventana.style.left = ((document.body.clientWidth-(document.body.clientWidth*0.6)) / 2) +  "px";
@@ -236,11 +263,13 @@
         });
       } 
       function ocultarDetalleFactura(){
+        /*Limpiar y ocultar ventana con datos de factura*/
         var ventana = document.getElementById('detallefactura');
         ventana.style.display = 'none';
         document.getElementById("tablaproductof").innerHTML='<thead id="cabecerapf"><tr><th>Referencia</th><th>Producto</th><th>Cantidad</th><th>Valor unitario</th><th>Valor total</th></tr></thead><tfoot><tr id="finalpf"><td>Total a pagar:</td><td id="totalfacc" colspan="4"></td></tr></tfoot>';
       } 
       function listarProductos(){
+        /*Lenar tabla con el listado de productos existentes*/
         var tablep;
         tablep = $('#dt_productol').DataTable({
           "destroy":true,
@@ -252,6 +281,7 @@
         });
       }
       function elegirOpcionProducto(){
+        /*Control de funciones de creación y modificación de productos*/
         if(document.getElementById("pid").value){
           modificarProducto();
         }else{
@@ -259,6 +289,7 @@
         }
       }
       function crearProducto(){
+        /*Creación del producto y envío de datos al controlador*/
         var nom_pro=document.getElementById("prnombre").value;
         var val_pro=document.getElementById("pvunitario").value;
         $.ajax({
@@ -281,6 +312,7 @@
         });
       }
       function modificarProducto(){
+        /*Modificación del producto y envío de datos al controlador*/
         var r = confirm("¿Desea modificar el producto?, si altera el precio se creará un nuevo producto para no afectar facturas anteriores");
         var id_pro=document.getElementById("pid").value;
         var nom_pro=document.getElementById("prnombre").value;
@@ -308,6 +340,7 @@
         }
       }  
       function descontinuarProducto(id){
+        /*Modificación del estado del producto y envío de datos al controlador*/
         $.ajax({
           method: "POST",
             url: "controllers/modificar_estado_producto_controller.php",
@@ -323,6 +356,7 @@
         });
       } 
       function activarProducto(id){
+        /*Modificación del estado del producto y envío de datos al controlador*/
         $.ajax({
           method: "POST",
             url: "controllers/modificar_estado_producto_controller.php",
@@ -338,6 +372,7 @@
         });
       }
       function crearFactura(){
+        /*Creación de la factura y envío de datos al controlador*/
         var factura = {};
         var detalle = {};
         factura["idcli"]=document.getElementById("idc").value;
@@ -373,6 +408,7 @@
         });
       }
       function elegirOpcionCliente(){
+        /*Control de funciones de creación y modificación de clientes*/    
         if(document.getElementById("clid").value){
           modificarCliente();
         }else{
@@ -380,6 +416,7 @@
         }
       }
       function crearCliente(){
+        /*Creación del cliente y envío de datos al controlador*/
         var cliente = {};
         var contacto = {};
         cliente["pnombre"]=document.getElementById("pnombre").value;
@@ -423,6 +460,7 @@
         });        
       }
       function modificarCliente(){
+        /*Modificación del cliente y envío de datos al controlador*/
         var cliente = {};
         var contacto = {};
         cliente["id"]=document.getElementById("clid").value;
