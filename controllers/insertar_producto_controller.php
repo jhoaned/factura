@@ -1,4 +1,8 @@
 <?php
+	/**
+	*Controlador de inserción de productos
+	*Obtiene datos de la vista y los almacena por medio del modelo respectivo
+	**/
 	include("../models/productos_model.php");
 	include("../db/db.php");
 	
