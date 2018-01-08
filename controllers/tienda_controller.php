@@ -1,4 +1,8 @@
 <?php
+	/**
+	*Controlador principal
+	*Obtiene datos de productos, clientes, tipo de contactos y tipo de documentos
+	**/
 	//Llamada al modelo
 	require_once("models/documentos_model.php");
 	require_once("models/contactos_model.php");
