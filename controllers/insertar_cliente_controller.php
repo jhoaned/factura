@@ -1,4 +1,8 @@
 <?php
+	/**
+	*Controlador de inserción de clientes
+	*Obtiene datos de la vista y los almacena por medio del modelo respectivo
+	**/
 	include("../models/clientes_model.php");
 	include("../db/db.php");
 
