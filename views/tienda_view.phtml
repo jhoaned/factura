@@ -1,13 +1,16 @@
 <!DOCTYPE html>
+<!--Vista general-->
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <title>Personas</title>
+    <!--Carga de estilos-->
     <link rel="stylesheet" href="views/css/bootstrap.min.css">
    	<link rel="stylesheet" href="views/css/dataTables.bootstrap.min.css">
    	<link rel="stylesheet" href="views/css/buttons.bootstrap.min.css">
     <link rel="stylesheet" href="views/css/estilos.css">
 
+    <!--Carga de archivos js-->
     <script src="views/js/jquery-1.12.3.js"></script>
    	<script src="views/js/bootstrap.min.js"></script>
    	<script src="views/js/jquery.dataTables.min.js"></script>
@@ -19,6 +22,7 @@
     <script src="views/js/funciones.js"></script>
   </head>
   <body>
+    <!--Listado de clientes-->
     <div class="row">
       <fieldset>
         <legend>Lista de clientes</legend>
@@ -55,6 +59,7 @@
       </fieldset>
     </div>
     <script type="text/javascript">
+      /**Conversión a taba dinámica (datatable**/
       var tablec;
       $(document).on('ready', function(){
         tablec = $('#dt_cliente').DataTable({
@@ -65,6 +70,7 @@
             "url":"//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
           }
         });
+        /**Evento de selección de filas**/
         $('#dt_clienteb').on( 'click', 'tr', function () {
           if( $(this).hasClass('selectedc') ) {
             $(this).removeClass('selectedc');
@@ -77,6 +83,7 @@
         });
       });
     </script>   
+    <!--Información del cliente-->
     <div id="detallecliente">
       <fieldset>
         <legend>Detalles del cliente</legend>
@@ -136,6 +143,7 @@
       </fieldset> 
       <br> 
     </div>
+    <!--Información de factura guardada-->
     <div id="detallefactura">
       <fieldset>
         <legend>Detalles de factura</legend>
@@ -176,6 +184,7 @@
       </fieldset>
       <br>
     </div>
+    <!--Formulario oara modificación/creación de cliente-->
     <div  id="modificacliente">
       <fieldset>
         <legend>Datos del cliente</legend>
@@ -251,6 +260,7 @@
       </fieldset>
       <br>
     </div>
+    <!--Formulario para la creación de una nueva factura-->
     <div id="nuevafactura">
       <fieldset>
         <legend>Factura</legend>
@@ -295,6 +305,7 @@
       </fieldset>
       <br>
     </div>
+    <!--Formulario para creación/modificación de productos-->
     <div id="nuevoproducto">
       <fieldset>
         <legend>Datos del producto</legend>
@@ -318,6 +329,7 @@
       </fieldset>
     </div>
     <hr>        
+    <!--Listado de los productos existentes-->
     <div class="row">
       <fieldset>
         <legend>Lista de productos</legend>
@@ -354,10 +366,12 @@
       </fieldset>
     </div>
     <script type="text/javascript">
+      /**Carga de productos**/
       $(document).on('ready', function(){
         listarProductos();
       });
     </script>
+    <!--Ventana con los productos activos para ingresar a facturas-->
     <div class="row" id="agregaproducto">
       <fieldset>
         <legend>Agregue el producto</legend>
@@ -390,6 +404,7 @@
       <br>
     </div>
     <script type="text/javascript">
+      /**Conversión a tabla dinámica**/
       var table;
       $(document).on('ready', function(){
         table = $('#dt_producto').DataTable({
@@ -400,6 +415,7 @@
             "url":"//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
           }
         });
+        /**Evento de selección del producto**/
         $('#dt_productob').on( 'click', 'tr', function () {
           if ( $(this).hasClass('selected') ) {
             $(this).removeClass('selected');
