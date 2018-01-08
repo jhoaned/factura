@@ -1,3 +1,7 @@
+/**
+* Estilos.css
+* Estilos personalizados para página y elementos dentro de ella
+**/
 body{
 	padding: 5px 25px 5px 25px !important;
 	font-family: "Times New Roman", Georgia, Serif !important;
@@ -35,6 +39,9 @@ select {
 	padding-right: 5px !important;
 	padding-left: 5px !important;
 }
+
+/**Manejo de ventanas emergentes (modal)**/
+
 #nuevoproducto{
     position: fixed; 
     text-align: justify !important;
