@@ -1,4 +1,8 @@
 <?php
+	/**
+	*Controlador de contactos
+	*Carga del listado de contactos del cliente
+	**/
 	include("../models/clientes_model.php");
 	include("../db/db.php");
 	$id=$_GET['cliid'];
