@@ -1,4 +1,8 @@
 <?php
+	/**
+	*Controlador de inserción de facturas
+	*Obtiene datos de la vista y los almacena por medio del modelo respectivo
+	**/
 	include("../models/facturas_model.php");
 	include("../models/clientes_model.php");
 	include("../db/db.php");
